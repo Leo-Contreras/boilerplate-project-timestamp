@@ -20,6 +20,9 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.use('/favicon.ico', express.static('public/favicon.ico'));
+
+app.use(express.static('public'));
 
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
