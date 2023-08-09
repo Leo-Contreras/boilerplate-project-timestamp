@@ -4,6 +4,8 @@
 // init project
 var express = require('express');
 var app = express();
+var moment = require('moment'); // Asegúrate de instalar moment con npm install moment
+
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
@@ -24,6 +26,23 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/:date", function (req, res) {
+  var inputDate = req.params.date;
+  var unixTime, utcTime;
+
+  // Si la entrada es un número, trátala como un timestamp UNIX
+  if (!isNaN(inputDate)) {
+    unixTime = parseInt(inputDate);
+  } else {
+    // Si no, trátala como una fecha en formato de cadena
+    unixTime = new Date(inputDate).getTime();
+  }
+
+  // Convertir el timestamp UNIX a formato UTC
+  utcTime = new Date(unixTime).toUTCString();
+
+  res.json({unix: unixTime, utc: utcTime});
+});
 
 
 // listen for requests :)
